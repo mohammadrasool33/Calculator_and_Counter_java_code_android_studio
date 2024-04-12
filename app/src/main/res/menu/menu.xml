@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/home"
+        android:title="Home"
+        />
+    <item android:title="Counter"
+        android:id="@+id/counter"/>
+    <item android:title="About Us"
+        android:id="@+id/about_us"
+        />
+
+
+</menu>
