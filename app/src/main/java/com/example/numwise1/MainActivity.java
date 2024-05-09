@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 import java.util.*;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Scriptable;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -131,32 +133,37 @@ public class MainActivity extends AppCompatActivity {
         updateDisplay(".");
     }
     public void exponentBtn(View view){
-
+        updateDisplay("^");
     }
-    public void parenthesisBtn(View view){
-        int currentPosition=display.getSelectionStart();
-        int openPar=0;
-        int closePar=0;
-        int textLength=display.getText().toString().length();
-        for (int i=0;i<currentPosition;i++){
-            if (display.getText().toString().substring(i,i+1).equals("(")){
-                openPar+=1;
-            }
-            if (display.getText().toString().substring(i,i+1).equals(")")){
-                closePar+=1;
-            }
-        }
-        if (openPar==closePar || display.getText().toString().substring(textLength-1,textLength).equals("(")){
-            updateDisplay("(");
-
-        }
-        else if (openPar<closePar && !display.getText().toString().substring(textLength-1,textLength).equals("(")){
-            updateDisplay(")");
-
-        }
-        display.setSelection(currentPosition+1);
+    public void closedBracket(View view){
+        updateDisplay(")");
     }
+    public void openBracket(View view){
+        updateDisplay("(");
+    }
+
     public void equalBtn(View view){
+        String finalResult=result(display.getText().toString());
+        if (!(finalResult=="Err")){
+            display.setText(finalResult+"");
+        }
+        else{
+            Toast.makeText(this,"wrong",Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    public String result(String data){
+        try {
+            Context context = Context. enter();
+            context.setOptimizationLevel(-1);
+            Scriptable scriptable=context.initSafeStandardObjects();
+            String result= context.evaluateString(scriptable,data,"Javascript",1,null).toString();
+            return result;
+        }
+        catch (Exception e ){
+            return "Err";
+        }
 
     }
     public void backspaceBtn(View view){
@@ -171,8 +178,9 @@ public class MainActivity extends AppCompatActivity {
     private void updateDisplay(String addString){
         String oldString=display.getText().toString();
         int currentPosition=display.getSelectionStart();
-        String leftStr=oldString.substring(0,currentPosition);
+
         String rightStr=oldString.substring(currentPosition);
+        String leftStr=oldString.substring(0,currentPosition);
         if (getString(R.string.display).equals(display.getText().toString())){
             display.setText(addString);
         }
@@ -181,4 +189,5 @@ public class MainActivity extends AppCompatActivity {
             display.setSelection(currentPosition+1);
         }
     }
+
 }

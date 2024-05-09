@@ -41,8 +41,8 @@
                 android:layout_height="70dp"
                 android:layout_weight="1"
                 android:background="@drawable/circle"
-                android:onClick="parenthesisBtn"
-                android:text="@string/parenthesis"
+                android:onClick="openBracket"
+                android:text="("
                 android:textColor="#ffffff"
                 android:textSize="24sp" />
 
@@ -53,8 +53,8 @@
                 android:layout_height="70dp"
                 android:layout_weight="1"
                 android:background="@drawable/circle"
-                android:onClick="exponentBtn"
-                android:text="@string/exponent"
+                android:onClick="closedBracket"
+                android:text=")"
                 android:textColor="#ffffff"
                 android:textSize="24sp" />
 
@@ -241,8 +241,9 @@
                 android:layout_height="70dp"
                 android:layout_weight="1"
                 android:background="@drawable/circle"
-                android:text="+/-"
+                android:text="@string/exponent"
                 android:textColor="#ffffff"
+                android:onClick="exponentBtn"
                 android:textSize="24sp" />
 
             <Button
@@ -280,6 +281,7 @@
                 android:onClick="equalBtn"
                 android:text="@string/equal"
                 android:textColor="#ffffff"
+
                 android:textSize="24sp" />
         </TableRow>
     </TableLayout>
